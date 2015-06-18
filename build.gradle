@@ -12,15 +12,17 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
-//jar {
-//    baseName = 'gs-accessing-data-neo4j'
-//    version =  '0.1.0'
-//}
+ext.springVersion = "4.0.7.RELEASE"
+ext.springDataGraphVersion = "3.3.0.RELEASE"
+ext.aspectjVersion = "1.7.4"
+
+apply from:'https://github.com/SpringSource/spring-data-neo4j/raw/master/build/gradle/springdataneo4j.gradle'
 
 repositories {
     mavenCentral()
     maven { url "https://m2.neo4j.org" }
     maven { url "https://repo.spring.io/libs-release" }
+    maven { url "http://maven.springframework.org/release" }
 }
 
 sourceCompatibility = 1.8
@@ -30,16 +32,17 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter")
     compile("org.springframework:spring-context")
     compile("org.springframework:spring-tx")
-    compile("org.springframework.data:spring-data-neo4j")
     compile "org.springframework.data:spring-data-neo4j-rest:3.3.0.RELEASE"
     compile ("org.springframework.data:spring-data-neo4j-cross-store:3.3.0.RELEASE") {
         exclude group: "org.hibernate.javax.persistence", module: "hibernate-jpa-2.0-api"
     }
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("com.h2database:h2")
-    
     compile("org.hibernate:hibernate-validator")
     compile("javax.el:javax.el-api:2.2.4")
+    
+    //compile "org.springframework.boot:spring-boot-starter-aop"
+    //compile "org.spring.framework:spring-aspects:4.1.6.RELEASE"
     
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("junit:junit")

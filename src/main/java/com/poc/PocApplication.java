@@ -3,12 +3,14 @@ package com.poc;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.neo4j.config.EnableNeo4jRepositories;
 import org.springframework.data.neo4j.cross_store.config.CrossStoreNeo4jConfiguration;
 import org.springframework.data.neo4j.rest.SpringCypherRestGraphDatabase;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 public class PocApplication {
@@ -16,6 +18,8 @@ public class PocApplication {
   @Configuration
   @EnableNeo4jRepositories(basePackages = "com.poc.domain.repository")
   @EnableJpaRepositories(basePackages = "com.poc.domain.repository.jpa")
+  @EnableTransactionManagement(mode = AdviceMode.PROXY)
+  //@EnableLoadTimeWeaving(aspectjWeaving=AspectJWeaving.ENABLED)
   static class Config extends CrossStoreNeo4jConfiguration {
 
     public Config() {
